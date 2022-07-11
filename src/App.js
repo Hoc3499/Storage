@@ -1,36 +1,24 @@
-import React, { useState } from 'react';
+import React, {useContext} from "react";
 
-import Login from './components/Login/Login';
-import Home from './components/Home/Home';
-import MainHeader from './components/MainHeader/MainHeader';
-import Count from './components/Count/Count';
-import AuthContext from './components/store/auth-context';
+import Login from "./components/Login/Login";
+import Home from "./components/Home/Home";
+import MainHeader from "./components/MainHeader/MainHeader";
+import AuthContext from "./components/store/auth-context";
+import Count from "./components/Count/Count";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const loginHandler = (email, password) => {
-    // We should of course check email and password
-    // But it's just a dummy/ demo anyways
-    setIsLoggedIn(true);
-  };
-
-  const logoutHandler = () => {
-    setIsLoggedIn(false);
-  };
+  const ctx = useContext(AuthContext)
 
   return (
-    <AuthContext.Provider value={{
-      isLoggedIn: isLoggedIn,
-      onLogout: logoutHandler
-    }}>
-      <MainHeader/>
+    <React.Fragment>
+      <MainHeader />
       <main>
-        {!isLoggedIn && <Login onLogin={loginHandler} />}
-        {isLoggedIn && <Home onLogout={logoutHandler} />}
+        {!ctx.isLoggedIn && <Login />}
+        {ctx.isLoggedIn && <Home />}
       </main>
       {/* <Count /> */}
-    </AuthContext.Provider>
+    </React.Fragment>
   );
 }
 
